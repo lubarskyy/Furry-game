@@ -6,9 +6,9 @@
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -70,11 +70,11 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Furry = __webpack_require__(3)
-var Coin = __webpack_require__(2)
+var Furry = __webpack_require__(3);
+var Coin = __webpack_require__(2);
 
 function Game(){
-  this.board = document.querySelectorAll('#board div');
+  this.board = document.querySelectorAll('.board div');
   this.furry = new Furry();
   this.coin = new Coin();
   this.score = 0;
@@ -82,7 +82,9 @@ function Game(){
     return x + (y * 10);
   }
   this.showFurry = function(){
-    this.hideVisibleFurry();
+    if(document.querySelector('.furry') != null){
+      this.hideVisibleFurry();
+    }
     this.board[this.index(this.furry.x, this.furry.y)].classList.add('furry');
   }
   this.showCoin = function(){
@@ -93,6 +95,12 @@ function Game(){
     this.idSetInterval = setInterval(function(){
       self.moveFurry()}, 250);
   }
+  this.pauseGame = function(){
+    clearInterval(this.idSetInterval);
+  }
+  document.querySelector('.score button').addEventListener('click', function(){
+    clearInterval(this.idSetInterval);
+  })
   this.moveFurry = function(){
     if(this.furry.direction === "right"){
       this.furry.x += 1;
@@ -112,13 +120,13 @@ function Game(){
   }
   this.changeDirection = function(event){
     if(event.which == 37){
-      this.furry.direction = "left";
+      this.furry.direction = 'left';
     } else if (event.which == 39){
-      this.furry.direction = "right";
+      this.furry.direction = 'right';
     } else if (event.which == 38){
-      this.furry.direction = "up";
+      this.furry.direction = 'up';
     } else if (event.which == 40){
-      this.furry.direction = "down";
+      this.furry.direction = 'down';
     }
   }
   document.addEventListener('keydown', function(event){
@@ -128,19 +136,19 @@ function Game(){
     if(this.furry.x == this.coin.x && this.furry.y == this.coin.y){
       document.querySelector('.coin').classList.remove('coin');
       this.score++
-      document.querySelector('#score strong').innerText = this.score;
+      document.querySelector('.score strong').innerText = this.score;
       this.coin = new Coin();
       this.showCoin();
     }
   }
   this.gameOver = function(){
     if(this.furry.x < 0 || this.furry.x > 9) {
-      document.querySelector('#over').classList.remove('invisible');
-      document.querySelector('pre strong').innerText = this.score;
+      document.querySelector('.over').classList.remove('invisible');
+      document.querySelector('p span').innerText = this.score;
       return clearInterval(this.idSetInterval);
     } else if (this.furry.y < 0 || this.furry.y > 9){
-      document.querySelector('#over').classList.remove('invisible');
-      document.querySelector('pre strong').innerText = this.score;
+      document.querySelector('.over').classList.remove('invisible');
+      document.querySelector('p span').innerText = this.score;
       return clearInterval(this.idSetInterval);
     }
   }
@@ -152,12 +160,28 @@ module.exports = Game;
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Game = __webpack_require__(0)
+var Game = __webpack_require__(0);
 
-var test = new Game();
-test.showFurry();
-test.showCoin();
-test.startGame();
+document.querySelector('.start button').addEventListener('click', function(){
+  var play = new Game();
+  play.showFurry();
+  play.showCoin();
+  play.startGame();
+
+  document.querySelector('.start').classList.add('invisible');
+});
+
+document.querySelector('.over button').addEventListener('click', function(){
+  document.querySelector('.score strong').innerText = 0;
+  document.querySelector('.coin').classList.remove('coin');
+
+  var play = new Game();
+  play.showFurry();
+  play.showCoin();
+  play.startGame();
+
+  document.querySelector('.over').classList.add('invisible');
+});
 
 
 /***/ }),

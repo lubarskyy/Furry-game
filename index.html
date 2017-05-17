@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Javascript Furry game</title>
-    <link rel='stylesheet' href='css/style.css'>
-
+  <meta charset='utf-8'>
+  <title>Furry game</title>
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <link rel='stylesheet' href='css/style.css'>
 </head>
 <body>
 
-  <section id='score'>
+  <section class='start'>
+    <div class="container">
+      <p>Furry Game</p>
+      <p>Collect coins by using your keyboard arrows. Avoid walls or you will crash!</p>
+      <button>Let's play!</button>
+    </div>
+  </section>
+
+  <section class='score'>
     <div>
       SCORE
       <br>
       <strong>0</strong>
     </div>
+    <button>test</button>
   </section>
 
-  <section id='board'>
-    <div class="furry"></div>
+  <section class='board'>
+    <div></div>
     <div></div>
     <div></div>
     <div></div>
@@ -119,10 +128,12 @@
     <div></div>
   </section>
 
-  <section id='over' class='invisible'>
-    <pre>GAME OVER</pre>
-    <pre>Your score: <strong></strong></pre>
-    <button type="button" name="play" onClick="window.location.reload()">PLAY AGAIN</button>
+  <section class='over invisible'>
+    <div class="container">
+      <p>GAME OVER</p>
+      <p>Your score: <span></span></p>
+      <button>PLAY AGAIN</button>
+    </div>
   </section>
 
   <script type='text/javascript' src='js/out.js'></script>
