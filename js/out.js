@@ -92,15 +92,10 @@ function Game(){
   }
   var self = this;
   this.startGame = function(){
+    document.querySelector('.game-start').play();
     this.idSetInterval = setInterval(function(){
       self.moveFurry()}, 250);
   }
-  this.pauseGame = function(){
-    clearInterval(this.idSetInterval);
-  }
-  document.querySelector('.score button').addEventListener('click', function(){
-    clearInterval(this.idSetInterval);
-  })
   this.moveFurry = function(){
     if(this.furry.direction === "right"){
       this.furry.x += 1;
@@ -119,6 +114,7 @@ function Game(){
     document.querySelector('.furry').classList.remove('furry');
   }
   this.changeDirection = function(event){
+    document.querySelector('.move-sound').play();
     if(event.which == 37){
       this.furry.direction = 'left';
     } else if (event.which == 39){
@@ -136,19 +132,17 @@ function Game(){
     if(this.furry.x == this.coin.x && this.furry.y == this.coin.y){
       document.querySelector('.coin').classList.remove('coin');
       this.score++
+      document.querySelector('.coin-sound').play();
       document.querySelector('.score strong').innerText = this.score;
       this.coin = new Coin();
       this.showCoin();
     }
   }
   this.gameOver = function(){
-    if(this.furry.x < 0 || this.furry.x > 9) {
+    if(this.furry.x < 0 || this.furry.x > 9 || this.furry.y < 0 || this.furry.y > 9) {
       document.querySelector('.over').classList.remove('invisible');
       document.querySelector('p span').innerText = this.score;
-      return clearInterval(this.idSetInterval);
-    } else if (this.furry.y < 0 || this.furry.y > 9){
-      document.querySelector('.over').classList.remove('invisible');
-      document.querySelector('p span').innerText = this.score;
+      document.querySelector('.game-over').play();
       return clearInterval(this.idSetInterval);
     }
   }
