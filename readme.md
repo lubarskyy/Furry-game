@@ -1,5 +1,5 @@
 # Info
-Live demo - http://lubarski.pl/furry-game
+Live demo - https://lubarskyy.github.io/Furry-game/
 
 This is my first game created using JavaScript and OOP.
 
